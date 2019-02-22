@@ -192,6 +192,7 @@ class Tag(Repository):
   """Stores a docker repository tag in a structured form."""
 
   def __init__(self, name, strict = True):
+    raise "Picked up the the code with the issue"
     parts = name.rsplit(':', 1)
     if len(parts) != 2:
       base = name
