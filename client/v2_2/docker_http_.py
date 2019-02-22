@@ -442,7 +442,7 @@ def ParseNextLinkHeader(resp):
 
 def Scheme(endpoint):
   """Returns https scheme for all the endpoints except localhost."""
-  if endpoint.startswith('localhost:'):
+  if endpoint.startswith('localhost:') or endpoint.startswith('127.0.0.1:'):
     return 'http'
   elif re.match(r'.*\.local(?:host)?(?::\d{1,5})?$', endpoint):
     return 'http'
