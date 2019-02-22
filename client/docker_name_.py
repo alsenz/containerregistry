@@ -192,15 +192,17 @@ class Tag(Repository):
   """Stores a docker repository tag in a structured form."""
 
   def __init__(self, name, strict = True):
-    raise "Picked up the the code with the issue"
-    parts = name.rsplit(':', 1)
+    parts = name.split('/', 1)
+    prefix = parts[0] if len(parts) == 2 else ""
+    tail = parts[1] if len(parts) == 2 else parts[0]
+    parts = tail.rsplit(':', 1)
     if len(parts) != 2:
       base = name
       tag = ''
     else:
-      base = parts[0]
+      base = prefix + parts[0]
       tag = parts[1]
-
+    
     self._tag = tag
     # We don't require a tag, but if we get one check it's valid,
     # even when not being strict.
