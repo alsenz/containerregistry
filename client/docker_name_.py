@@ -192,15 +192,20 @@ class Tag(Repository):
   """Stores a docker repository tag in a structured form."""
 
   def __init__(self, name, strict = True):
+    proto = ""
+    proto_parts = name.split("://", 1)
+    if len(proto_parts) == 2: # There's a protocol in front
+      proto = proto_parts[0] + "://"
+      name = proto_parts[1]
     parts = name.split('/', 1)
     prefix = parts[0] if len(parts) == 2 else ""
     tail = parts[1] if len(parts) == 2 else parts[0]
     parts = tail.rsplit(':', 1)
     if len(parts) != 2:
-      base = name
+      base = proto + name
       tag = ''
     else:
-      base = prefix + parts[0]
+      base = proto + prefix + parts[0]
       tag = parts[1]
     
     self._tag = tag
